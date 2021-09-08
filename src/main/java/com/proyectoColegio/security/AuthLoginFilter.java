@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyectoColegio.dto.LoginDTO;
 import com.proyectoColegio.security.jwt.JwtProvider;
+import com.proyectoColegio.security.jwt.Tokens;
 
 public class AuthLoginFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -52,12 +53,12 @@ public class AuthLoginFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authentication) throws IOException, ServletException {
-		String accesToken = jwtProvider.crearJWT(authentication);
-		String refreshToken = jwtProvider.crearRefressToken(authentication);
+		
+		Tokens tokens = jwtProvider.crearJWT(authentication);
 
 		Map<String, String> tokensMap = new HashMap<>();
-		tokensMap.put("accesToken", accesToken);
-		tokensMap.put("refreshToken", refreshToken);
+		tokensMap.put("accesToken", tokens.getAccessToken());
+		tokensMap.put("refreshToken", tokens.getRefreshToken());
 		response.setContentType("application/json");
 		new ObjectMapper().writeValue(response.getOutputStream(), tokensMap);
 	}

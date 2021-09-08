@@ -32,6 +32,9 @@ public class ServicesUsuarioImlp implements ServicesUsuario, UserDetailsService 
 	@Override
 	public Usuario guardarUsuario(Usuario usuario) {
 		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+	
+//		usuario.getRoles().add(new Rol("ROL_USER"));
+		
 		return this.repositorioUsuario.save(usuario);
 	}
 
@@ -53,6 +56,11 @@ public class ServicesUsuarioImlp implements ServicesUsuario, UserDetailsService 
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		usuario.getRoles().stream().forEach(rol -> { authorities.add(new SimpleGrantedAuthority(rol.getNombre()));});
 		return new User(usuario.getUsername(), usuario.getPassword(), authorities);
+	}
+	
+	@Override
+	public Usuario getUser(String username) {
+		return this.repositorioUsuario.findByUsername(username);
 	}
 
 }

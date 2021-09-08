@@ -10,10 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
 	@Id
@@ -48,6 +51,22 @@ public class Usuario implements Serializable {
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.username = username;
 		this.password = password;
+	}
+	
+	
+
+	public Usuario(String nombre, String apellido, String identificacion, String correo, String telefono,
+			String direccion, String fechaDeNacimiento, String username, String password, Collection<Rol> roles) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.identificacion = identificacion;
+		this.correo = correo;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
 	}
 
 	public int getId() {

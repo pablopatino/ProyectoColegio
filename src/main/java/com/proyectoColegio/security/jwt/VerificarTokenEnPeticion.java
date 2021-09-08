@@ -38,7 +38,7 @@ public class VerificarTokenEnPeticion extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		if (request.getServletPath().equals("/login")) {
+		if (request.getServletPath().equals("/login") || request.getServletPath().equals("/auth/refresh/token") ) {
 			filterChain.doFilter(request, response);
 		} else {
 
