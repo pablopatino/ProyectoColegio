@@ -41,7 +41,7 @@ public class JwtProvider {
 		String accesToken = JWT.create()
 				.withSubject(authentication.getName())
 				.withClaim("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 				.withIssuer("LOGIN")
 				.sign(algorithm);
 		String refresToken = JWT.create()

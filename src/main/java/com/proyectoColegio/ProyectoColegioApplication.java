@@ -1,29 +1,39 @@
 package com.proyectoColegio;
 
-import java.util.ArrayList;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.proyectoColegio.domain.Alumno;
-import com.proyectoColegio.domain.Asignatura;
-import com.proyectoColegio.domain.Docente;
-import com.proyectoColegio.domain.Grado;
 import com.proyectoColegio.domain.Rol;
 import com.proyectoColegio.domain.Usuario;
 import com.proyectoColegio.services.ServicesUsuario;
-import com.proyectoColegio.services.alumnos.ServicesAlumnos;
-import com.proyectoColegio.services.asignatura.ServicesAsignatura;
-import com.proyectoColegio.services.docente.ServicesDocente;
-import com.proyectoColegio.services.grado.ServicesGrado;
 
 @SpringBootApplication
 public class ProyectoColegioApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoColegioApplication.class, args);
+	}
+	
+	@Bean
+	CommandLineRunner run(ServicesUsuario servicesUsuario) {
+		return args -> {
+			
+			servicesUsuario.guardarRol(new Rol("ROL_ADMIN"));
+			servicesUsuario.guardarRol(new Rol("ROL_USER"));
+			servicesUsuario.guardarRol(new Rol("ROL_PROFESOR"));
+			
+			servicesUsuario.guardarUsuario(new Usuario("Andmin", "admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin"));
+			servicesUsuario.agregarRol("admin", "ROL_ADMIN");
+		};
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }

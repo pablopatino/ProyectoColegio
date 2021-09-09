@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.proyectoColegio.excepciones.UsuarioNoEncontrado;
+import com.proyectoColegio.excepciones.UsuarioRepetido;
+import com.proyectoColegio.excepciones.ValorRequerido;
 
 @ControllerAdvice
 public class ManejadorExcepciones {
@@ -16,6 +18,8 @@ private static final ConcurrentHashMap<String, Integer> CODIGO_ESTADO = new Conc
 	
 	public ManejadorExcepciones() {
 		CODIGO_ESTADO.put(UsuarioNoEncontrado.class.getSimpleName(), HttpStatus.NOT_FOUND.value());
+		CODIGO_ESTADO.put(ValorRequerido.class.getSimpleName(), HttpStatus.BAD_REQUEST.value());
+		CODIGO_ESTADO.put(UsuarioRepetido.class.getSimpleName(), HttpStatus.CONFLICT.value());
 	}
 	
 	@ExceptionHandler(Exception.class)

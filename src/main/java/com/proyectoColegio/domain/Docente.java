@@ -1,7 +1,5 @@
 package com.proyectoColegio.domain;
 
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +8,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Docente extends Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -19,7 +17,6 @@ public class Docente extends Usuario {
 	@OneToOne(optional = true)
 	private Asignatura asignatura;
 
-	
 	public Docente(String nombre, String apellido, String identificacion, String correo, String telefono,
 			String direccion, String fechaDeNacimiento, String username, String password, String especialidad,
 			Asignatura asignatura) {
@@ -28,11 +25,9 @@ public class Docente extends Usuario {
 		this.asignatura = asignatura;
 	}
 
-
 	public Docente() {
 	}
-	
-	
+
 	public Docente(String especialidad, Asignatura asignatura) {
 		this.especialidad = especialidad;
 		this.asignatura = asignatura;

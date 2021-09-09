@@ -18,6 +18,7 @@ import com.proyectoColegio.domain.Rol;
 import com.proyectoColegio.domain.Usuario;
 import com.proyectoColegio.security.jwt.JwtProvider;
 import com.proyectoColegio.services.ServicesUsuario;
+import com.proyectoColegio.services.docente.ServicesDocente;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,6 +29,9 @@ public class UsuarioController {
 	ServicesUsuario servicesUsuario;
 	@Autowired
 	JwtProvider jwtProvider;
+	
+	@Autowired
+	ServicesDocente servicesDocente;
 	
 	@PostMapping("/nuevo/usuario")
 	public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario){

@@ -18,6 +18,8 @@ import com.proyectoColegio.domain.Usuario;
 import com.proyectoColegio.repositorio.RepositorioRol;
 import com.proyectoColegio.repositorio.RepositorioUsuario;
 
+import static com.proyectoColegio.utils.ValidarCampos.*;
+
 @Service
 @Transactional
 public class ServicesUsuarioImlp implements ServicesUsuario, UserDetailsService {
@@ -33,7 +35,10 @@ public class ServicesUsuarioImlp implements ServicesUsuario, UserDetailsService 
 	public Usuario guardarUsuario(Usuario usuario) {
 		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 	
-//		usuario.getRoles().add(new Rol("ROL_USER"));
+		validarUsuario(usuario);
+		
+		Rol rol = this.repositorioRol.findByName("ROL_USER");
+		usuario.getRoles().add(rol);
 		
 		return this.repositorioUsuario.save(usuario);
 	}
